@@ -1,4 +1,4 @@
-# Unitree Quadruped Robot Gazebo Simulation (Aliengo, A1 & Go1)
+# 🤖 Unitree Quadruped Robot Gazebo Simulation (Aliengo, A1 & Go1)
 This repository contains all the files and code needed to simulate the [Aliengo](https://www.unitree.com/aliengo/), [A1](https://www.unitree.com/products/a1) & [Go1](https://www.unitree.com/products/go1) quadruped robots using [Gazebo](http://gazebosim.org/) and [ROS](https://www.ros.org/).
 The software runs on [ROS noetic](http://wiki.ros.org/noetic) and [Ubuntu 20.04](http://www.releases.ubuntu.com/20.04/). 
 
@@ -7,7 +7,7 @@ The software runs on [ROS noetic](http://wiki.ros.org/noetic) and [Ubuntu 20.04]
 </p>
 
 
-## Setup
+## 🚀 Setup
 ### Install Dependencies 
 ```
 sudo apt-get install ros-$ROS_DISTRO-controller-manager \
@@ -29,7 +29,7 @@ sudo apt-get install ros-$ROS_DISTRO-controller-manager \
 mkdir -p catkin_ws/src
 cd catkin_ws/src
 
-# Clone the required GitHub repository
+# Clone this GitHub repository
 git clone https://github.com/wessamhamid/unitree_simulation.git
 
 # Navigate to the unitree_simulation directory and set permissions for scripts
@@ -48,7 +48,7 @@ catkin_make
 source catkin_ws/devel/setup.bash
 ```
 
-## Run Simulation
+## ▶️ Run Simulation
 
 ### Simulation 1 - Robot Description: Control individual joints.
 
@@ -122,10 +122,17 @@ Replace `normal` with any of the following worlds:
 
 #### Setting Up Additional Worlds (from AWS):
 ```
+# Navigate to the src directory
 cd catkin_ws/src
+
+# Clone the required GitHub repository
 git clone https://github.com/aws-robotics/aws-robomaker-small-warehouse-world.git
-cd ../
+
+# Navigate back to the catkin workspace and build the specific package
+cd ..
 catkin_make --only-pkg-with-deps aws_robomaker_small_warehouse_world
+
+# Source the setup.bash file
 source devel/setup.bash
 ```
 
@@ -138,7 +145,7 @@ roslaunch quadruped_unitree go1_gazebo.launch world:=no_roof_small_warehouse
     <img src="./resources/go1_aws.png" height="300">
 </p>
 
-## Credits
+## 🙌 Credits
  - lnotspotl: https://github.com/lnotspotl/a1_sim_py
  - kimsooyoung: https://github.com/kimsooyoung/a1_sim_py
  - mike4192: https://github.com/mike4192/spotMicro
