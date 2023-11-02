@@ -41,7 +41,7 @@ chmod +x controllers/a1_controller/scripts/robot_controller_gazebo.py
 chmod +x controllers/go1_controller/scripts/robot_controller_gazebo.py
 
 # Navigate back to the catkin workspace and build the project
-cd ../../..
+cd ../..
 catkin_make
 
 # Source the setup.bash file
