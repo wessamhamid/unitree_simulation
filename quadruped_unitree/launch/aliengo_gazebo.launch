@@ -1,0 +1,19 @@
+<launch>
+
+    <arg name="world" default="normal"/>
+
+    <!-- Gazebo Simulation -->
+    <include file="$(find aliengo_gazebo)/launch/simulation.launch">
+      <arg name="world_file_name" value="$(arg world)"/>
+    </include>
+
+    <!-- Joystick -->
+    <!-- <include file="$(find unitree_joystick)/launch/ramped_joystick.launch" /> -->
+    
+    <!-- twist mux -->
+    <include file="$(find quadruped_unitree)/launch/custom_twist_mux.launch" />
+
+    <!-- Robot Controller -->
+    <include file="$(find aliengo_controller)/launch/robot_controller.launch"/>
+
+</launch>
