@@ -1,0 +1,7 @@
+<launch>
+    <arg name="rname" default="aliengo"/>
+    <param name="robot_name" value="$(arg rname)"/>
+
+    <!-- <node pkg="aliengo_controller" type="aliengo_servo" name="aliengo_servo" respawn="true"/> -->
+
+</launch>
