@@ -1,7 +1,10 @@
 <launch>
+    <arg name="world" default="normal"/>
 
     <!-- Gazebo Simulation -->
-    <include file="$(find go1_gazebo)/launch/simulation.launch" />
+    <include file="$(find go1_gazebo)/launch/simulation.launch">
+      <arg name="world_file_name" value="$(arg world)"/>
+    </include>
 
     <!-- twist mux -->
     <include file="$(find quadruped_unitree)/launch/custom_twist_mux.launch" />
