@@ -45,7 +45,7 @@ cd ../..
 catkin_make
 
 # Source the setup.bash file
-source catkin_ws/devel/setup.bash
+source devel/setup.bash
 ```
 
 ## ▶️ Run Simulation
@@ -93,6 +93,7 @@ roslaunch quadruped_unitree go1_gazebo.launch
 
 #### Terminal 2 - Teleoperation using keyboard:
 ```
+source devel/setup.bash
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/key_vel
 ```
 
