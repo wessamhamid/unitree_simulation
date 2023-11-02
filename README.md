@@ -1,30 +1,14 @@
-# Unitree Quadruped robot simulation - Python version
+# Unitree Quadruped Robot Gazebo Simulation (Aliengo, A1 & Go1)
+This repository contains all the files and code needed to simulate the [Aliengo](https://www.unitree.com/aliengo/), [A1](https://www.unitree.com/products/a1) & [Go1](https://www.unitree.com/products/go1) quadruped robots using [Gazebo](http://gazebosim.org/) and [ROS](https://www.ros.org/).
+The software runs on [ROS noetic](http://wiki.ros.org/noetic) and [Ubuntu 20.04](http://www.releases.ubuntu.com/20.04/). 
 
 <p align="center">
-    <img src="./resources/go1_walk.gif" height="480">
+	<img src="./resources/aliengo_walk.gif" height="400">
 </p>
 
-This repository contains all the files and code needed to simulate the [a1](https://www.unitree.com/products/a1) & [go1](https://www.unitree.com/products/go1) quadrupedal robot using [Gazebo](http://gazebosim.org/) and [ROS](https://www.ros.org/).
-The software runs on below envs
-
-* [ROS noetic](http://wiki.ros.org/noetic) and [Ubuntu 20.04](http://www.releases.ubuntu.com/20.04/). 
-* [ROS melodic](http://wiki.ros.org/melodic) and [Ubuntu 18.04](http://www.releases.ubuntu.com/18.04/).
-* There's also [Docker Hub Image](https://hub.docker.com/repository/docker/tge1375/unitree_sim) but I recommend to use native environment for performance.
 
 ## Setup
-
-* Clone Codes
-
-```
-cd <your-ws>/src
-# melodic-version
-git clone https://github.com/kimsooyoung/a1_sim_py.git
-# noetic-version
-git clone https://github.com/kimsooyoung/a1_sim_py.git -b noetic-devel
-```
-
-* Install Additional Pkgs
-
+### Install Dependencies 
 ```
 sudo apt-get install ros-$ROS_DISTRO-controller-manager \
 	ros-$ROS_DISTRO-joint-state-publisher-gui \
@@ -39,121 +23,118 @@ sudo apt-get install ros-$ROS_DISTRO-controller-manager \
 	ros-$ROS_DISTRO-xacro
 ```
 
-* Build Pkgs one by one (It's okay to use `catkin_make` for build all)
-
+### Workspace Setup
 ```
-catkin_make --only-pkg-with-deps quadruped_unitree && source devel/setup.bash
-catkin_make --only-pkg-with-deps a1_joystick && source devel/setup.bash
-
-catkin_make --only-pkg-with-deps a1_controller && source devel/setup.bash
-catkin_make --only-pkg-with-deps go1_controller && source devel/setup.bash
-
-catkin_make --only-pkg-with-deps a1_description && source devel/setup.bash
-catkin_make --only-pkg-with-deps go1_description && source devel/setup.bash
-
-catkin_make --only-pkg-with-deps a1_gazebo && source devel/setup.bash
-catkin_make --only-pkg-with-deps go1_gazebo && source devel/setup.bash
-```
-
-* Make Python Codes executable
-
-```
-cd <code-dir>
-chmod +x a1_joystick/scripts/ramped_joystick.py
+mkdir catkin_ws && cd catkin_ws
+mkdir src && cd src
+git clone https://github.com/wessamhamid/unitree_simulation.git
+cd unitree_simulation
+chmod +x unitree_joystick/scripts/ramped_joystick.py
 chmod +x quadruped_unitree/scripts/*.py
-
 cd controllers
+chmod +x aliengo_controller/scripts/robot_controller_gazebo.py
 chmod +x a1_controller/scripts/robot_controller_gazebo.py
 chmod +x go1_controller/scripts/robot_controller_gazebo.py
+cd ..
+cd ..
+cd ..
+catkin_make
+source devel/setup.bash
 ```
 
-> If you just wanna try this and don't care about anything about ros, gazebo, etc... Just use prepared docker image
+## Run Simulation
 
+### Simulation 1 - Robot Description: Control individual joints.
+
+For Aliengo:
 ```
-docker pull tge1375/unitree_sim:0.0.1
-docker run -it -p 6080:80 --name unitree_sim --privileged tge1375/unitree_sim:0.0.1
-# Open your web-browser and then connect to 
-# http://127.0.0.1:6080/ 
+roslaunch aliengo_description aliengo_rviz.launch
 ```
 
-You'll see images like belows
+For A1:
+```
+roslaunch a1_description a1_rviz.launch
+```
 
-[] img
-
-## Execution
-
-* Example 1 - Robot Description
-
-See how quadruped robot constructed and control each joints.
-
+For Go1:
 ```
 roslaunch go1_description go1_rviz.launch
 ```
 
 <p align="center">
     <img src="./resources/go1_desc.png" height="300">
+	<img src="./resources/a1_desc.png" height="300">
+	<img src="./resources/aliengo_desc.png" height="300">
 </p>
 
-* Example 2 - Gazebo Execution
+### Simulation 2 - Walking teleoperation within Gazebo.
 
-Walking quadruped robots within Gazebo Sim.
+#### Terminal 1 - Launch Gazebo models:
+For Aliengo:
 
 ```
+roslaunch quadruped_unitree aliengo_gazebo.launch
+```
+For A1:
+```
+roslaunch quadruped_unitree a1_gazebo.launch
+```
+
+For Go1:
+```
 roslaunch quadruped_unitree go1_gazebo.launch
+```
 
-# Sometimes it falls over and we need to raise them by below command
-rosrun quadruped_unitree respawn_robot.py
-
-# Finally makes it walk!
+#### Terminal 2 - Teleoperation using keyboard:
+```
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/key_vel
 ```
 
+
+#### Note:
+If robot falls over, press `ctrl + shift + r` while in Gazebo window to reset robot.
+
+
 <p align="center">
-    <img src="./resources/go1_pcl.png" height="300">
+    <img src="./resources/go1_pcl.png" height="250">
+	<img src="./resources/go1_walk.gif" height="250">
 </p>
 
-* Example 2 - AWS warehouse world 
+<p align="center">
+    
+</p>
 
-Prepare external pkg from AWS
-
+### Worlds
+#### To change the Gazebo world for Simulation 2:
 ```
-cd <your-ws>/src
+roslaunch quadruped_unitree aliengo_gazebo.launch world:=normal
+```
+Replace `normal` with any of the following worlds:
+- `earth`
+- `office`
+- `space` 
+
+#### Setting Up Additional Worlds (from AWS):
+```
+cd catkin_ws/src
 git clone https://github.com/aws-robotics/aws-robomaker-small-warehouse-world.git
 cd ../
-
-catkin_make --only-pkg-with-deps aws_robomaker_small_warehouse_world && source devel/setup.bash
+catkin_make --only-pkg-with-deps aws_robomaker_small_warehouse_world
+source devel/setup.bash
 ```
 
-And then modify `simulation.launch` in `go1_gazebo` pkg.
-
+Launch the simulation:
 ```
-<arg name="world_file_name" default="no_roof_small_warehouse"/>
-<!-- <arg name="world_file_name" default="normal"/> -->
-```
-
-Finally, Run example again!
-
-```
-roslaunch quadruped_unitree go1_gazebo.launch
+roslaunch quadruped_unitree go1_gazebo.launch world:=no_roof_small_warehouse
 ```
 
 <p align="center">
     <img src="./resources/go1_aws.png" height="300">
 </p>
 
----
-
-## Future Work
-
-- [ ] Stairs Climbing
-- [ ] Update Walking Pace
-- [ ] Template based leg control (Ground Reaction Force required)
-- [ ] Reinforcement learning (Will be fun)
-- [ ] Autonomous Walking
-- [ ] Sensor Fusion and Tracking
-
 ## Credits
  - lnotspotl: https://github.com/lnotspotl/a1_sim_py
+ - kimsooyoung: https://github.com/kimsooyoung/a1_sim_py
  - mike4192: https://github.com/mike4192/spotMicro
  - Unitree Robotics: https://github.com/unitreerobotics/a1_ros
  - QUADRUPED ROBOTICS: https://quadruped.de
