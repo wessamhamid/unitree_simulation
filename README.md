@@ -62,9 +62,9 @@ roslaunch go1_description go1_rviz.launch
 ```
 
 <p align="center">
-    <img src="./resources/go1_desc.png" height="300">
-	<img src="./resources/a1_desc.png" height="300">
-	<img src="./resources/aliengo_desc.png" height="300">
+    <img src="./resources/go1_desc.png" height="200">
+	<img src="./resources/a1_desc.png" height="200">
+	<img src="./resources/aliengo_desc.png" height="200">
 </p>
 
 ### Simulation 2 - Walking teleoperation within Gazebo.
@@ -97,7 +97,7 @@ If robot falls over, press `ctrl + shift + r` while in Gazebo window to reset ro
 
 <p align="center">
     <img src="./resources/go1_pcl.png" height="250">
-	<img src="./resources/go1_walk.gif" height="250">
+	<img src="./resources/go1_walk.gif" height="320">
 </p>
 
 <p align="center">
