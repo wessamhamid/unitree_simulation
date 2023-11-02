@@ -25,21 +25,27 @@ sudo apt-get install ros-$ROS_DISTRO-controller-manager \
 
 ### Workspace Setup
 ```
-mkdir catkin_ws && cd catkin_ws
-mkdir src && cd src
+# Create catkin workspace and navigate to the src directory
+mkdir -p catkin_ws/src
+cd catkin_ws/src
+
+# Clone the required GitHub repository
 git clone https://github.com/wessamhamid/unitree_simulation.git
+
+# Navigate to the unitree_simulation directory and set permissions for scripts
 cd unitree_simulation
 chmod +x unitree_joystick/scripts/ramped_joystick.py
 chmod +x quadruped_unitree/scripts/*.py
-cd controllers
-chmod +x aliengo_controller/scripts/robot_controller_gazebo.py
-chmod +x a1_controller/scripts/robot_controller_gazebo.py
-chmod +x go1_controller/scripts/robot_controller_gazebo.py
-cd ..
-cd ..
-cd ..
+chmod +x controllers/aliengo_controller/scripts/robot_controller_gazebo.py
+chmod +x controllers/a1_controller/scripts/robot_controller_gazebo.py
+chmod +x controllers/go1_controller/scripts/robot_controller_gazebo.py
+
+# Navigate back to the catkin workspace and build the project
+cd ../../..
 catkin_make
-source devel/setup.bash
+
+# Source the setup.bash file
+source catkin_ws/devel/setup.bash
 ```
 
 ## Run Simulation
